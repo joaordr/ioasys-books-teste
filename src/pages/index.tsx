@@ -1,24 +1,47 @@
+/* eslint-disable @next/next/no-img-element */
+
+import { useContext, useState } from 'react';
+import { AuthContext } from '../contexts/AuthContext';
 
 import styles from '../styles/SignIn.module.scss';
 
 export default function SignIn() {
-  
+  const [email, setEmail] = useState('desafio@ioasys.com.br');
+  const [password, setPassword] = useState('12341234');
+  const [loginError, setLoginError] = useState(false);
+
+  const { signIn, user } = useContext(AuthContext);
+
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const data = {
+      email,
+      password,
+    }
+
+    const response = await signIn(data);
+    if (response) {
+      console.log('redirect');
+    } else {
+      setLoginError(true);
+    }
+  }
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        {/* <span><Image src="/images/logo.png" alt="logo" width={104} height={36} />Books</span> */}
         <span><img src="/images/logo.png" alt="logo" />Books</span>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className={styles.form_block}>
             <label htmlFor="email">Email</label>
-            <input name="email" type="text" id="email" />
+            <input name="email" type="text" id="email" value={email} onChange={e => setEmail(e.target.value)} onInput={() => { loginError ? setLoginError(false) : null }} />
           </div>
           <div className={styles.form_block}>
             <div className={styles.password_block}>
               <div className={styles.pass_block_1}>
                 <label htmlFor="password">Email</label>
-                <input name="password" type="password" id="password" />
+                <input name="password" type="password" id="password" value={password} onChange={e => setPassword(e.target.value)} onInput={() => { loginError ? setLoginError(false) : null }} />
               </div>
               <div className={styles.pass_block_2}>
                 <button type="submit">Entrar</button>
@@ -29,12 +52,15 @@ export default function SignIn() {
           </div>
         </form>
 
-        <div className={styles.tooltip}>
-          <div className={styles.arrow_up}></div>
-          <div className={styles.tooltip_text}>
-            Email e/ou senha incorreta.
+        {loginError && (
+          <div className={styles.tooltip}>
+            <div className={styles.arrow_up}></div>
+            <div className={styles.tooltip_text}>
+              Email e/ou senha incorreta.
+            </div>
           </div>
-        </div>
+        )}
+
 
       </div>
     </div>

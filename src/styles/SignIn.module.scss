@@ -1,6 +1,10 @@
 @media screen and (max-width: 720px) {
   .container {
-    background-position: -0rem;
+    background-position: -30rem;
+  }
+
+  .content{
+    padding: 1rem ! important;
   }
 }
 
@@ -9,8 +13,6 @@
   background-size: cover;
   display: flex;
   height: 100vh;
-
-
 }
 
 .content {
@@ -67,6 +69,7 @@
       background: none;
       border: none;
       color: white;
+      font-weight: 400;
 
       &:focus {
         outline: none;
@@ -85,6 +88,11 @@
       margin-right: 15px;
     }
   }
+}
+
+.tooltip {
+  position: relative;
+  // bottom: 150px;
 }
 
 .tooltip_text {
