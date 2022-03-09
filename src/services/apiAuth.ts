@@ -18,7 +18,6 @@ export function apiAuth() {
     })
 
     api.interceptors.response.use(response => { return response; }, (error) => {
-        console.log('teste');
         if (error.response.status === 401) {
             cookies = parseCookies(undefined);
 
@@ -30,9 +29,8 @@ export function apiAuth() {
                 api.post('/auth/refresh-token', {
                     refreshToken: refreshToken
                 }).then(response => {
-                    const token = response.headers["Authorization"];
+                    const token = response.headers["authorization"];
                     const RefreshToken = response.headers["refresh-token"];
-
 
                     setCookie(undefined, 'ioasys.token', token, {
                         maxAge: 60 * 60 * 24 * 10, // 10 days
@@ -65,6 +63,7 @@ export function apiAuth() {
                     },
                     onFailure: (error) => {
                         reject(error);
+                        destroyCookies();
                     },
                 })
             })
