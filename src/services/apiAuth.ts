@@ -41,12 +41,11 @@ export function apiAuth() {
                         path: '/'
                     });
 
-                    api.defaults.headers['Authorization'] = `Bearer ${token}`;
+                    api.defaults.headers['Authorization'] = `Bearer ${token}`; // atualiza o token da api
 
-                    failedRequestQueue.forEach(request => request.onSucess(token));
+                    failedRequestQueue.forEach(request => request.onSucess(token)); // realiza as requisições que estavam em fila
                     failedRequestQueue = [];
                 }).catch(error => {
-                    failedRequestQueue.forEach(request => request.onFailure(error));
                     failedRequestQueue = [];
                     destroyCookies();
 
@@ -55,7 +54,7 @@ export function apiAuth() {
                 })
             }
 
-            return new Promise((resolve, reject) => { // realiza as requisições que estavam em fila
+            return new Promise((resolve, reject) => {
                 failedRequestQueue.push({
                     onSucess: (token: string) => {
                         originalConfig.headers['Authorization'] = `Bearer ${token}`;
