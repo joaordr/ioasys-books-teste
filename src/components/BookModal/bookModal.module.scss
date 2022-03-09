@@ -133,7 +133,7 @@
 
 .close {
     z-index: 9999 !important;
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     border-radius: 100px;
