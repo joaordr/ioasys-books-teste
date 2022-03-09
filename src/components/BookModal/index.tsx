@@ -11,6 +11,7 @@ interface ModalProps {
 }
 
 export default function BookModal({ book, isOpen, onRequestClose }: ModalProps) {
+    ReactModal.setAppElement('body');
     if (book == null) {
         return <></>;
     }

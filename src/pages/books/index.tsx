@@ -12,6 +12,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { apiAuth } from '../../services/apiAuth';
 
 import styles from './books.module.scss';
+import Loader from '../../components/Loader';
 
 export default function Books() {
     const { signOut } = useContext(AuthContext);

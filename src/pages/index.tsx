@@ -3,24 +3,27 @@
 import Head from 'next/head';
 import Router from 'next/router';
 import { useContext, useState } from 'react';
+import Loader from '../components/Loader';
 import { AuthContext } from '../contexts/AuthContext';
 
 import styles from '../styles/SignIn.module.scss';
 
 export default function SignIn() {
-  const { signIn, user, isAuthenticated } = useContext(AuthContext);
+  const [email, setEmail] = useState('desafio@ioasys.com.br');
+  const [password, setPassword] = useState('12341234');
+  const [loginError, setLoginError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { signIn, isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated) {
     Router.push('/books');
     return '';
   }
 
-  const [email, setEmail] = useState('desafio@ioasys.com.br');
-  const [password, setPassword] = useState('12341234');
-  const [loginError, setLoginError] = useState(false);
-
   async function handleSubmit(event) {
     event.preventDefault();
+    setIsLoading(true);
     const data = {
       email,
       password,
@@ -31,6 +34,7 @@ export default function SignIn() {
       Router.push('/books');
     } else {
       setLoginError(true);
+      setIsLoading(false);
     }
   }
 
@@ -39,6 +43,8 @@ export default function SignIn() {
       <Head>
         <title>Login</title>
       </Head>
+
+      <Loader isLoading={isLoading} />
 
       <div className={styles.container}>
 
