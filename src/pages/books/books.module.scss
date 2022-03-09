@@ -28,7 +28,7 @@
     }
 
     .content {
-        grid-template-columns: repeat(3, 1fr) !important;       
+        grid-template-columns: repeat(3, 1fr) !important;
     }
 }
 
@@ -88,12 +88,16 @@
             margin-left: 5px;
         }
 
+        transition: border 0.3s;
+
         &:hover {
             cursor: pointer;
+            border: 1px solid rgba(51, 51, 51, 1);
         }
 
         &:disabled {
             cursor: default;
+            border: 1px solid rgba(51, 51, 51, 0.2);
         }
     }
 }
