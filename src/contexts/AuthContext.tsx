@@ -28,7 +28,7 @@ type AuthProviderProps = {
     children: ReactNode;
 }
 
-export function signOut() {
+export function destroyCookies() {
     destroyCookie(undefined, 'ioasys.token');
     destroyCookie(undefined, 'ioasys.refreshToken');
     destroyCookie(undefined, 'ioasys.user');
@@ -40,7 +40,7 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<User>();
-    const isAuthenticated = !!user;
+    let isAuthenticated = !!user;
 
     useEffect(() => {
         const { 'ioasys.user': user } = parseCookies();
@@ -48,6 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (user && user !== 'undefined') {
             setUser(JSON.parse(user));
         } else {
+            isAuthenticated = false;
             signOut();
         }
 
@@ -88,6 +89,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
             }
 
         }
+    }
+
+    function signOut() {
+        destroyCookie(undefined, 'ioasys.token');
+        destroyCookie(undefined, 'ioasys.refreshToken');
+        destroyCookie(undefined, 'ioasys.user');
+        setUser(undefined);
+
+        Router.push('/');
     }
 
     return (

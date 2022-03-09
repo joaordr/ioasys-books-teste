@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setCookie, parseCookies } from 'nookies';
 
-import { signOut } from '../contexts/AuthContext';
+import { destroyCookies } from '../contexts/AuthContext';
 
 
 let isRefreshing = false;
@@ -50,7 +50,7 @@ export function apiAuth() {
                 }).catch(error => {
                     failedRequestQueue.forEach(request => request.onFailure(error));
                     failedRequestQueue = [];
-                    signOut();
+                    destroyCookies();
 
                 }).finally(() => {
                     isRefreshing = false;

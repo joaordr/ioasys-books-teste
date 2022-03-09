@@ -8,11 +8,16 @@ import { AuthContext } from '../contexts/AuthContext';
 import styles from '../styles/SignIn.module.scss';
 
 export default function SignIn() {
+  const { signIn, user, isAuthenticated } = useContext(AuthContext);
+
+  if (isAuthenticated) {
+    Router.push('/books');
+    return '';
+  }
+
   const [email, setEmail] = useState('desafio@ioasys.com.br');
   const [password, setPassword] = useState('12341234');
   const [loginError, setLoginError] = useState(false);
-
-  const { signIn, user } = useContext(AuthContext);
 
   async function handleSubmit(event) {
     event.preventDefault();
