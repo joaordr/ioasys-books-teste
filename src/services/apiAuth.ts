@@ -8,6 +8,7 @@ let isRefreshing = false;
 let failedRequestQueue = [];
 
 export function apiAuth() {
+
     let cookies = parseCookies(undefined);
 
     const api = axios.create({
@@ -52,6 +53,8 @@ export function apiAuth() {
                 }).finally(() => {
                     isRefreshing = false;
                 })
+            }else{
+                destroyCookies();
             }
 
             return new Promise((resolve, reject) => {

@@ -2,7 +2,7 @@
 
 import Head from 'next/head';
 import Router from 'next/router';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Loader from '../components/Loader';
 import { AuthContext } from '../contexts/AuthContext';
 
@@ -14,12 +14,14 @@ export default function SignIn() {
   const [loginError, setLoginError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { signIn, isAuthenticated } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
 
-  if (isAuthenticated) {
-    Router.push('/books');
-    return '';
-  }
+  useEffect(() => {
+    if (document.cookie) {
+      Router.push('/books');
+      return null;
+    }
+  }, [])
 
   async function handleSubmit(event) {
     event.preventDefault();

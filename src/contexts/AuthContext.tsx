@@ -43,12 +43,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
     let isAuthenticated = !!user;
 
     useEffect(() => {
-        const { 'ioasys.user': user } = parseCookies();
+        const { 'ioasys.user': userCookie } = parseCookies();
 
-        if (user && user !== 'undefined') {
-            setUser(JSON.parse(user));
+        if (userCookie && userCookie !== 'undefined') {
+            setUser(JSON.parse(userCookie));
         } else {
-            isAuthenticated = false;
             signOut();
         }
 

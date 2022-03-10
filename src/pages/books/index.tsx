@@ -37,6 +37,9 @@ export default function Books() {
     }
 
     useEffect(() => {
+        if (!isAuthenticated) {
+            signOut;
+        }
         fetchBooks();
     }, [activePage])
 
