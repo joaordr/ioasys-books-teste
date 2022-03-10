@@ -12,10 +12,9 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { apiAuth } from '../../services/apiAuth';
 
 import styles from './books.module.scss';
-import Loader from '../../components/Loader';
 
 export default function Books() {
-    const { signOut } = useContext(AuthContext);
+    const { signOut, isAuthenticated } = useContext(AuthContext);
     const [books, setBooks] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
     const [activePage, setActivePage] = useState(1);
@@ -25,13 +24,11 @@ export default function Books() {
 
     const api = apiAuth();
 
-    async function fetchBooks(onlyBooks = true) {
+    async function fetchBooks() {
         try {
             api.get(`/books?page=${activePage}&amount=12`).then(response => {
                 setBooks(response.data.data);
-                if (!onlyBooks) {
-                    setTotalPages(Math.ceil(response.data.totalPages));
-                }
+                setTotalPages(Math.ceil(response.data.totalPages));
             });
         } catch (error) {
             console.error(error);
@@ -40,11 +37,7 @@ export default function Books() {
     }
 
     useEffect(() => {
-        fetchBooks(false);
-    }, [])
-
-    useEffect(() => {
-        fetchBooks(false);
+        fetchBooks();
     }, [activePage])
 
     function handleNextPage() {
